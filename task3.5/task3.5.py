@@ -29,14 +29,20 @@ observed_order = "".join(
     sorted(ascii_lowercase, key=lambda letter: counts[letter], reverse=True)
 )
 
+
 scores = {}
 
 for language, expected_order in language_orders.items():
     score = sum(
-        abs(observed_order.index(letter) - expected_order.index(letter))
+        counts[letter] / total
+        * abs(
+            observed_order.index(letter)
+            - expected_order.index(letter)
+        )
         for letter in ascii_lowercase
     )
     scores[language] = score
+
 
 detected_language = min(scores, key=scores.get)
 

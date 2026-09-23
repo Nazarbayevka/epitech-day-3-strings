@@ -56,15 +56,16 @@ else:
     )
 
     scores = {
-        language: sum(
-            abs(
-                observed_order.index(letter)
-                - expected_order.index(letter)
-            )
-            for letter in ascii_lowercase
+    language: sum(
+        ascii_counts[letter] / len(letters)
+        * abs(
+            observed_order.index(letter)
+            - expected_order.index(letter)
         )
-        for language, expected_order in language_orders.items()
-    }
+        for letter in ascii_lowercase
+    )
+    for language, expected_order in language_orders.items()
+}
 
     detected_language = min(scores, key=scores.get)
 
